@@ -16,3 +16,4 @@ catch (ChessBoardException ex)
 {
     Console.WriteLine(ex.Message);
 }
+
