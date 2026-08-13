@@ -1,3 +1,4 @@
+using Chess.Entities.Enums;
 namespace Chess.Entities.Board
 {
     public abstract class Piece

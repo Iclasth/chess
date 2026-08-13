@@ -1,10 +1,10 @@
-using Chess.Entities;
+using Chess.Entities.Board;
 
 namespace Chess.Screen
 {
     public static class Screen
     {
-        ChessBoard board = new ChessBoard(8, 8);
+        
         public static void PrintBoard(ChessBoard board)
         {
             for (int i = 0; i < board.Ranks; i++)
@@ -17,7 +17,7 @@ namespace Chess.Screen
                     }
                     else
                     {
-                        Console.Write(ChessBoard.piece(i, j) + " ");
+                        Console.Write(board.piece(i, j) + " ");
                     }
                 }
                 Console.WriteLine();
