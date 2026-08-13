@@ -3,13 +3,15 @@ namespace Chess.Entities.Board
 {
     public abstract class Piece
     {
+        public ChessBoard Board { get; protected set; }
         public Position Position { get; set; }
         public Color Color { get; protected set; }
         public int MoveCount { get; protected set; }
 
-        public Piece(Position position, Color color)
+        public Piece(ChessBoard board, Color color)
         {
-            Position = position;
+            Board = board;
+            Position = null;
             Color = color;
             MoveCount = 0;
         }

@@ -14,9 +14,18 @@ namespace Chess.Entities.Board
             Pieces = new Piece[ranks, columns];
         }
 
+        public ChessBoard(Position position) => Pieces[position.Rank, position.Column];
+       
+
         public Piece piece(int rank, int column)
         {
             return Pieces[rank, column];
+        }
+
+        public void PlacePiece(Piece piece, Position position)
+        {
+            Pieces[position.Rank, position.Column] = piece;
+            piece.Position = position;
         }
     }
 }
