@@ -13,5 +13,10 @@ namespace Chess.Entities.Board
             Columns = columns;
             Pieces = new Piece[ranks, columns];
         }
+
+        public Piece piece(int rank, int column)
+        {
+            return Pieces[rank, column];
+        }
     }
 }
