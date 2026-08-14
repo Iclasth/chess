@@ -25,5 +25,7 @@ namespace Chess.Entities.Board
         {
             MoveCount--;
         }
+
+        public abstract bool[,] PossibleMoves();
     }
 }
