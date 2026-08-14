@@ -15,10 +15,10 @@ namespace Chess.Entities.Board
             Pieces = new Piece[ranks, columns];
         }
 
-        public Piece piece(Position position) => Pieces[position.Rank, position.Column];
+        public Piece Piece(Position position) => Pieces[position.Rank, position.Column];
        
 
-        public Piece piece(int rank, int column)
+        public Piece Piece(int rank, int column)
         {
             return Pieces[rank, column];
         }
@@ -34,7 +34,7 @@ namespace Chess.Entities.Board
         public bool IsTherePiece(Position position)
         {
             ValidatePosition(position);
-            return piece(position) != null;
+            return Piece(position) != null;
         }
 
         public bool IsValidPosition(Position position)
@@ -58,8 +58,8 @@ namespace Chess.Entities.Board
 
         public Piece RemovePiece(Position position)
         {
-            if(piece(position) == null) return null;
-            Piece aux = piece(position);
+            if(Piece(position) == null) return null;
+            Piece aux = Piece(position);
             aux.Position = null;
             Pieces[position.Rank, position.Column] = null;
             return aux;
