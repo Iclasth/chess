@@ -18,6 +18,13 @@ try
         Console.WriteLine();
         Console.Write("Origin: ");
         Position origin = Screen.ReadChessPosition().ToPosition();
+
+        bool[,] possibleMoves = chessGame.Board.Piece(origin).PossibleMoves();
+        Console.Clear();
+
+        Screen.PrintBoard(chessGame.Board, possibleMoves);
+        Console.WriteLine();
+
         Console.Write("Destiny: ");
         Position destiny = Screen.ReadChessPosition().ToPosition();
         chessGame.ExecuteMove(origin, destiny);
