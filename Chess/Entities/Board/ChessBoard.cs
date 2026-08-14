@@ -56,6 +56,16 @@ namespace Chess.Entities.Board
             piece.Position = position;
         }
 
+        public Piece RemovePiece(Position position)
+        {
+            if(piece(position) == null) return null;
+            Piece aux = piece(position);
+            aux.Position = null;
+            Pieces[position.Rank, position.Column] = null;
+            return aux;
+            
+        }
+
 
     }
 }
