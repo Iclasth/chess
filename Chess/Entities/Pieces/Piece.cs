@@ -26,6 +26,26 @@ namespace Chess.Entities.Board
             MoveCount--;
         }
 
+        public bool CanMoveTo(Position position)
+        {
+            return PossibleMoves()[position.Rank, position.Column];
+        }
         public abstract bool[,] PossibleMoves();
+
+        public bool ExistsPossibleMoves()
+        {
+            bool[,] moves = PossibleMoves();
+            for (int i = 0; i < Board.Ranks; i++)
+            {
+                for (int j = 0; j < Board.Columns; j++)
+                {
+                    if (moves[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

@@ -7,29 +7,45 @@ using Chess.Exceptions;
 try
 {
     ChessGame chessGame = new ChessGame();
-    chessGame.Board.PlacePiece(new Rook(chessGame.Board, Color.White), new ChessPosition('c', 1).ToPosition());
-    chessGame.Board.PlacePiece(new Rook(chessGame.Board, Color.Black), new Position(1, 4));
-    chessGame.Board.PlacePiece(new King(chessGame.Board, Color.Black), new Position(0, 2));
+    chessGame.PlaceNewPiece('c', 1, new Rook(chessGame.Board, Color.White));
+    chessGame.PlaceNewPiece('c', 8, new Rook(chessGame.Board, Color.Black));
+    chessGame.PlaceNewPiece('e', 8, new King(chessGame.Board, Color.Black));
 
     while (!chessGame.IsFinished)
     {
-        Console.Clear();
-        Screen.PrintBoard(chessGame.Board);
-        Console.WriteLine();
-        Console.Write("Origin: ");
-        Position origin = Screen.ReadChessPosition().ToPosition();
 
-        bool[,] possibleMoves = chessGame.Board.Piece(origin).PossibleMoves();
-        Console.Clear();
+        try
+        {
+            Console.Clear();
+            Screen.PrintBoard(chessGame.Board);
+            Console.WriteLine();
 
-        Screen.PrintBoard(chessGame.Board, possibleMoves);
-        Console.WriteLine();
+            Console.WriteLine("Turn: " + chessGame.Turn);
+            Console.WriteLine("Current Player: " + chessGame.CurrentPlayer);
 
-        Console.Write("Destiny: ");
-        Position destiny = Screen.ReadChessPosition().ToPosition();
-        chessGame.ExecuteMove(origin, destiny);
+            Console.WriteLine();
+            Console.Write("Origin: ");
+            Position origin = Screen.ReadChessPosition().ToPosition();
+            chessGame.ValidateOriginPosition(origin);
+
+            bool[,] possibleMoves = chessGame.Board.Piece(origin).PossibleMoves();
+            Console.Clear();
+
+            Screen.PrintBoard(chessGame.Board, possibleMoves);
+            Console.WriteLine();
+
+            Console.Write("Destiny: ");
+            Position destiny = Screen.ReadChessPosition().ToPosition();
+            chessGame.ValidateDestinyPosition(origin, destiny);
+            chessGame.RealizePlay(origin, destiny);
+        }
+        catch (ChessBoardException ex)
+        {
+            Console.WriteLine(ex.Message);
+            Console.ReadLine();
+        }
     }
-    Screen.PrintBoard(chessGame.Board);
+    //Screen.PrintBoard(chessGame.Board);
 }
 catch (ChessBoardException ex)
 {
