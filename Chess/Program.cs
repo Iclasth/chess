@@ -17,11 +17,7 @@ try
         try
         {
             Console.Clear();
-            Screen.PrintBoard(chessGame.Board);
-            Console.WriteLine();
-
-            Console.WriteLine("Turn: " + chessGame.Turn);
-            Console.WriteLine("Current Player: " + chessGame.CurrentPlayer);
+            Screen.PrintGame(chessGame);
 
             Console.WriteLine();
             Console.Write("Origin: ");

@@ -49,6 +49,42 @@ namespace Chess.Screen
             Console.BackgroundColor = originalBackground;
         }
 
+        public static void PrintGame(ChessGame chessGame)
+        {
+            PrintBoard(chessGame.Board);
+            Console.WriteLine();
+
+            PrintCapturedPieces(chessGame);
+            Console.WriteLine();
+
+            Console.WriteLine("Turn: " + chessGame.Turn);
+            Console.WriteLine("Current Player: " + chessGame.CurrentPlayer);
+        }
+
+        public static void PrintCapturedPieces(ChessGame chessGame)
+        {
+            Console.WriteLine("Captured Pieces: ");
+            Console.Write("White: ");
+            PrintSet(chessGame.CapturedPiecesByColor(Color.White));
+            Console.WriteLine();
+            Console.Write("Black: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            PrintSet(chessGame.CapturedPiecesByColor(Color.Black));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        public static void PrintSet(HashSet<Piece> set)
+        {
+            Console.Write("[");
+            foreach (Piece piece in set)
+            {
+                Console.Write(piece + " ");
+            }
+            Console.Write("]");
+        }
+
         public static ChessPosition ReadChessPosition()
         {
             string s = Console.ReadLine();
