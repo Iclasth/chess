@@ -59,6 +59,11 @@ namespace Chess.Screen
 
             Console.WriteLine("Turn: " + chessGame.Turn);
             Console.WriteLine("Current Player: " + chessGame.CurrentPlayer);
+
+            if (chessGame.Check)
+            {
+                Console.WriteLine("CHECK!");
+            }
         }
 
         public static void PrintCapturedPieces(ChessGame chessGame)
