@@ -80,6 +80,8 @@ public class Pawn : Piece
                 moves[position.Rank, position.Column] = true;
             }        
         }
+
+        return moves;
     }    
 
 }
