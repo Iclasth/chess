@@ -58,12 +58,22 @@ namespace Chess.Screen
             Console.WriteLine();
 
             Console.WriteLine("Turn: " + chessGame.Turn);
-            Console.WriteLine("Current Player: " + chessGame.CurrentPlayer);
-
-            if (chessGame.Check)
+            if (!chessGame.IsFinished)
             {
-                Console.WriteLine("CHECK!");
+                Console.WriteLine("Current Player: " + chessGame.CurrentPlayer);   
+                
+                if (chessGame.Check)
+                {
+                    Console.WriteLine("CHECK!");
+                }
+
+            } else
+            {
+                Console.WriteLine("CHECKMATE!");
+                Console.WriteLine("Winner: " + chessGame.CurrentPlayer);
             }
+
+            
         }
 
         public static void PrintCapturedPieces(ChessGame chessGame)

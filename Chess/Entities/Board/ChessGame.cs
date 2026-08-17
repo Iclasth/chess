@@ -74,8 +74,48 @@ public class ChessGame
             Check = false;
         }
 
-        Turn++;
-        ChangePlayer();
+        if (IsCheckMate(Adversary(CurrentPlayer)))
+        {
+            IsFinished = true;
+        }
+        else
+        {
+            Turn++;
+            ChangePlayer();
+        }
+
+        
+    }
+
+    public bool IsCheckMate(Color color)
+    {
+        if (!IsInCheck(color))
+        {
+            return false;
+        }
+        foreach (Piece piece in PiecesInGameByColor(color))
+        {
+            bool[,] possibleMoves = piece.PossibleMoves();
+            for (int i = 0; i < Board.Ranks; i++)
+            {
+                for (int j = 0; j < Board.Columns; j++)
+                {
+                    if (possibleMoves[i, j])
+                    {
+                        Position origin = piece.Position;
+                        Position destiny = new Position(i, j);
+                        Piece capturedPiece = ExecuteMove(origin, destiny);
+                        bool checkTest = IsInCheck(color);
+                        UndoMove(origin, destiny, capturedPiece);
+                        if (!checkTest)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     public void ChangePlayer()
@@ -124,7 +164,7 @@ public class ChessGame
         foreach (Piece piece in PiecesInGameByColor(Adversary(color)))
         {
             bool[,] possibleMoves = piece.PossibleMoves();
-            if (possibleMoves[king.Position.Row, king.Position.Column])
+            if (possibleMoves[king.Position.Rank, king.Position.Column])
             {
                 return true;
             }
