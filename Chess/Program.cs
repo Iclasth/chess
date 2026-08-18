@@ -82,7 +82,8 @@ try
             Console.ReadLine();
         }
     }
-    //Screen.PrintBoard(chessGame.Board);
+    Console.Clear();
+    Screen.PrintGame(chessGame);
 }
 catch (ChessBoardException ex)
 {

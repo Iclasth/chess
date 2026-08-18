@@ -33,6 +33,12 @@ public class ChessGame
 
     public Piece ExecuteMove(Position origin, Position destiny)
     {
+        // Evitar que o rei seja capturado diretamente, pois isso não é permitido no xadrez.
+        if(Board.Piece(origin) is King)
+        {
+            throw new ChessBoardException("A King cannot be captured directly!");
+        }
+
         Piece piece = Board.RemovePiece(origin);
         piece.IncrementMoveCount();
         Piece capturedPiece = Board.RemovePiece(destiny);
@@ -201,6 +207,8 @@ public class ChessGame
 
     public void ValidateOriginPosition(Position position)
     {
+        Board.ValidatePosition(position);
+
         if (Board.Piece(position) == null)
         {
             throw new ChessBoardException("There is no piece on the chosen origin position!");
@@ -217,6 +225,8 @@ public class ChessGame
 
     public void ValidateDestinyPosition(Position origin, Position destiny)
     {
+        Bpard.ValidatePosition(origin);
+        Board.ValidatePosition(destiny);
         if (!Board.Piece(origin).CanMoveTo(destiny))
         {
             throw new ChessBoardException("Invalid destiny position!");

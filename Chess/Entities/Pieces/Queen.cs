@@ -58,9 +58,9 @@ public class Queen : Piece
             {
                 break;
             }
-            position.SetValues(position.Rank, Position.Column - 1);
+            position.SetValues(position.Rank, position.Column - 1);
         }
-
+    
         // Right
         position.SetValues(Position.Rank, Position.Column + 1);
         while (Board.IsValidPosition(position) && CanMove(position))
@@ -70,7 +70,7 @@ public class Queen : Piece
             {
                 break;
             }
-            position.SetValues(position.Rank, Position.Column + 1);
+            position.SetValues(position.Rank, position.Column + 1);
         }
 
         // Up-Left

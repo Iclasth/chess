@@ -54,6 +54,22 @@ public class Knight : Piece
             moves[position.Rank, position.Column] = true;
         }
 
+
+        (int rankOffset, int columnOffset)[] offsets =
+        {
+            (-2, -1), (-2, 1), (2, -1), (2, 1),
+            (-1, -2), (-1, 2), (1, -2), (1, 2)
+        };
+
+        foreach (var (rankOffset, columnOffset) in offsets)
+        {
+            position.SetValues(Position.Rank + rankOffset, Position.Column + columnOffset);
+            if (Board.IsValidPosition(position) && CanMove(position))
+            {
+                moves[position.Rank, position.Column] = true;
+            }
+        }
+
         return moves;
     }
 }
