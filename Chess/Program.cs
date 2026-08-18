@@ -14,7 +14,7 @@ try
     chessGame.PlaceNewPiece('b', 1, new Knight(chessGame.Board, Color.White));
     chessGame.PlaceNewPiece('c', 1, new Bishop(chessGame.Board, Color.White));
     chessGame.PlaceNewPiece('d', 1, new Queen(chessGame.Board, Color.White));
-    chessGame.PlaceNewPiece('e', 1, new King(chessGame.Board, Color.White));
+    chessGame.PlaceNewPiece('e', 1, new King(chessGame.Board, Color.White, chessGame));
     chessGame.PlaceNewPiece('f', 1, new Bishop(chessGame.Board, Color.White));
     chessGame.PlaceNewPiece('g', 1, new Knight(chessGame.Board, Color.White));
     chessGame.PlaceNewPiece('h', 1, new Rook(chessGame.Board, Color.White));
@@ -37,7 +37,7 @@ try
     chessGame.PlaceNewPiece('b', 8, new Knight(chessGame.Board, Color.Black));
     chessGame.PlaceNewPiece('c', 8, new Bishop(chessGame.Board, Color.Black));
     chessGame.PlaceNewPiece('d', 8, new Queen(chessGame.Board, Color.Black));
-    chessGame.PlaceNewPiece('e', 8, new King(chessGame.Board, Color.Black));
+    chessGame.PlaceNewPiece('e', 8, new King(chessGame.Board, Color.Black, chessGame));
     chessGame.PlaceNewPiece('f', 8, new Bishop(chessGame.Board, Color.Black));
     chessGame.PlaceNewPiece('g', 8, new Knight(chessGame.Board, Color.Black));
     chessGame.PlaceNewPiece('h', 8, new Rook(chessGame.Board, Color.Black));

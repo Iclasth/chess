@@ -47,6 +47,27 @@ public class ChessGame
         {
             CapturedPieces.Add(capturedPiece);
         }
+
+        // Special move: Castling kingside
+        if (piece is King && destiny.Column == origin.Column + 2)
+        {
+            Position originRook = new Position(origin.Rank, origin.Column + 3);
+            Position destinyRook = new Position(origin.Rank, origin.Column + 1);
+            Piece rook = Board.RemovePiece(originRook);
+            rook.IncrementMoveCount();
+            Board.PlacePiece(rook, destinyRook);    
+        }
+
+        // Special move: Castling queenside
+        if (piece is King && destiny.Column == origin.Column - 2)
+        {
+            Position originRook = new Position(origin.Rank, origin.Column - 4);
+            Position destinyRook = new Position(origin.Rank, origin.Column - 1);
+            Piece rook = Board.RemovePiece(originRook);
+            rook.IncrementMoveCount();
+            Board.PlacePiece(rook, destinyRook);    
+        }
+
         return capturedPiece;
     }
 
@@ -60,6 +81,26 @@ public class ChessGame
             CapturedPieces.Remove(capturedPiece);
         }
         Board.PlacePiece(piece, origin);
+
+        // Special move: Castling kingside
+        if (piece is King && destiny.Column == origin.Column + 2)
+        {
+            Position originRook = new Position(origin.Rank, origin.Column + 3);
+            Position destinyRook = new Position(origin.Rank, origin.Column + 1);
+            Piece rook = Board.RemovePiece(destinyRook);
+            rook.DecrementMoveCount();
+            Board.PlacePiece(rook, originRook);    
+        }
+
+        // Special move: Castling queenside
+        if (piece is King && destiny.Column == origin.Column - 2)
+        {
+            Position originRook = new Position(origin.Rank, origin.Column - 4);
+            Position destinyRook = new Position(origin.Rank, origin.Column - 1);
+            Piece rook = Board.RemovePiece(destinyRook);
+            rook.DecrementMoveCount();
+            Board.PlacePiece(rook, originRook);
+        }
     }
 
     public void RealizePlay(Position origin, Position destiny)
@@ -225,7 +266,7 @@ public class ChessGame
 
     public void ValidateDestinyPosition(Position origin, Position destiny)
     {
-        Bpard.ValidatePosition(origin);
+        Board.ValidatePosition(origin);
         Board.ValidatePosition(destiny);
         if (!Board.Piece(origin).CanMoveTo(destiny))
         {
