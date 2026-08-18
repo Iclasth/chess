@@ -1,10 +1,17 @@
 ﻿using Chess.Entities.Board;
 using Chess.Entities.Enums;
+
 namespace Chess.Entities;
-public class Rook : Piece
+
+public class Bishop : Piece
 {
-    public Rook(ChessBoard board, Color color) : base(board, color)
+    public Bishop(ChessBoard board, Color color) : base(board, color)
     {
+    }
+
+    public override string ToString()
+    {
+        return "B";
     }
 
     public bool CanMove(Position position)
@@ -19,8 +26,8 @@ public class Rook : Piece
 
         Position position = new Position(0, 0);
 
-        // Up
-        position.SetValues(Position.Rank - 1, Position.Column);
+        // Up-Left
+        position.SetValues(Position.Rank - 1, Position.Column - 1);
         while (Board.IsValidPosition(position) && CanMove(position))
         {
             moves[position.Rank, position.Column] = true;
@@ -28,11 +35,11 @@ public class Rook : Piece
             {
                 break;
             }
-            position.SetValues(position.Rank - 1, position.Column);
+            position.SetValues(position.Rank - 1, position.Column - 1);
         }
 
-        // Down
-        position.SetValues(Position.Rank + 1, Position.Column);
+        // Up-Right
+        position.SetValues(Position.Rank - 1, Position.Column + 1);
         while (Board.IsValidPosition(position) && CanMove(position))
         {
             moves[position.Rank, position.Column] = true;
@@ -40,11 +47,11 @@ public class Rook : Piece
             {
                 break;
             }
-            position.SetValues(position.Rank + 1, position.Column);
+            position.SetValues(position.Rank - 1, position.Column + 1);
         }
 
-        // Left
-        position.SetValues(Position.Rank, Position.Column - 1);
+        // Down-Right
+        position.SetValues(Position.Rank + 1, Position.Column + 1);
         while (Board.IsValidPosition(position) && CanMove(position))
         {
             moves[position.Rank, position.Column] = true;
@@ -52,11 +59,11 @@ public class Rook : Piece
             {
                 break;
             }
-            position.SetValues(position.Rank, position.Column - 1);
+            position.SetValues(position.Rank + 1, position.Column + 1);
         }
 
-        // Right
-        position.SetValues(Position.Rank, Position.Column + 1);
+        // Down-Left
+        position.SetValues(Position.Rank + 1, Position.Column - 1);
         while (Board.IsValidPosition(position) && CanMove(position))
         {
             moves[position.Rank, position.Column] = true;
@@ -64,13 +71,9 @@ public class Rook : Piece
             {
                 break;
             }
-            position.SetValues(position.Rank, position.Column + 1);
+            position.SetValues(position.Rank + 1, position.Column - 1);
         }
 
         return moves;
-    }
-    public override string ToString()
-    {
-        return "R";
     }
 }

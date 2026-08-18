@@ -11,6 +11,12 @@ namespace Chess.Entities.Board
             Column = column;
         }
 
+        public void SetValues(int rank, int column)
+        {
+            Rank = rank;
+            Column = column;
+        }
+
         public override string ToString()
         {
             return $"({Rank}, {Column})";
