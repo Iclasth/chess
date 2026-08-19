@@ -153,6 +153,19 @@ public class ChessGame
             UndoMove(origin, destiny, capturedPiece);
             throw new ChessBoardException("You cannot put yourself in check!");
         }
+
+        Piece movedPiece = Board.Piece(destiny);
+
+        // Special move: Promotion
+        if (movedPiece is Pawn && (destiny.Rank == 0 || destiny.Rank == 7))
+        {
+            movedPiece = Board.RemovePiece(destiny);
+            Pieces.Remove(movedPiece);
+            Piece queen = new Queen(Board, movedPiece.Color);
+            Board.PlacePiece(queen, destiny);
+            Pieces.Add(queen);
+        }
+
         if (IsInCheck(Adversary(CurrentPlayer)))
         {
             Check = true;
@@ -172,7 +185,7 @@ public class ChessGame
             ChangePlayer();
         }
 
-        Piece movedPiece = Board.Piece(destiny);
+        
 
         if (movedPiece is Pawn && (destiny.Rank == origin.Rank - 2  || destiny.Rank == origin.Rank + 2))
         {
