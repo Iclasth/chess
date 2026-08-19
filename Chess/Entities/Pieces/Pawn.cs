@@ -5,10 +5,11 @@ namespace Chess.Entities;
 
 public class Pawn : Piece 
 {
-    public Pawn(ChessBoard board, Color color) : base(board, color)
+    private ChessGame ChessGame { get; set; }
+    public Pawn(ChessBoard board, Color color, ChessGame chessGame) : base(board, color)
     {
-        
-    }   
+        ChessGame = chessGame;
+    }
 
     public override string ToString()
     {
@@ -55,6 +56,26 @@ public class Pawn : Piece
             {
                 moves[position.Rank, position.Column] = true;
             }
+
+            // #special move en passant white
+            if (Position.Rank == 3)
+            {
+                Position left = new Position(Position.Rank, Position.Column - 1);
+                if (Board.IsValidPosition(left) && ExistAdversary(left) && Board.Piece(left) == ChessGame.EnPassantVulnerable)
+                {
+                    moves[left.Rank - 1, left.Column] = true;
+                }
+            }
+            if (Position.Rank == 3)
+            {
+                Position right = new Position(Position.Rank, Position.Column + 1);
+                if (Board.IsValidPosition(right) && ExistAdversary(right) && Board.Piece(right) == ChessGame.EnPassantVulnerable)
+                {
+                    moves[right.Rank - 1, right.Column] = true;
+                }
+            }
+
+
         }
         else
         {
@@ -78,7 +99,26 @@ public class Pawn : Piece
             if (Board.IsValidPosition(position) && ExistAdversary(position))
             {
                 moves[position.Rank, position.Column] = true;
-            }        
+            }
+
+             // #special move en passant black
+            if (Position.Rank == 4)
+            {
+                Position left = new Position(Position.Rank, Position.Column - 1);
+                if (Board.IsValidPosition(left) && ExistAdversary(left) && Board.Piece(left) == ChessGame.EnPassantVulnerable)
+                {
+                    moves[left.Rank + 1, left.Column] = true;
+                }
+            }
+            if (Position.Rank == 4)
+            {
+                Position right = new Position(Position.Rank, Position.Column + 1);
+                if (Board.IsValidPosition(right) && ExistAdversary(right) && Board.Piece(right) == ChessGame.EnPassantVulnerable)
+                {
+                    moves[right.Rank + 1, right.Column] = true;
+                }
+            }
+        
         }
 
         return moves;

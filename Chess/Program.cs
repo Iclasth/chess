@@ -20,14 +20,14 @@ try
     chessGame.PlaceNewPiece('h', 1, new Rook(chessGame.Board, Color.White));
 
     // Peões (Linha 2)
-    chessGame.PlaceNewPiece('a', 2, new Pawn(chessGame.Board, Color.White));
-    chessGame.PlaceNewPiece('b', 2, new Pawn(chessGame.Board, Color.White));
-    chessGame.PlaceNewPiece('c', 2, new Pawn(chessGame.Board, Color.White));
-    chessGame.PlaceNewPiece('d', 2, new Pawn(chessGame.Board, Color.White));
-    chessGame.PlaceNewPiece('e', 2, new Pawn(chessGame.Board, Color.White));
-    chessGame.PlaceNewPiece('f', 2, new Pawn(chessGame.Board, Color.White));
-    chessGame.PlaceNewPiece('g', 2, new Pawn(chessGame.Board, Color.White));
-    chessGame.PlaceNewPiece('h', 2, new Pawn(chessGame.Board, Color.White));
+    chessGame.PlaceNewPiece('a', 2, new Pawn(chessGame.Board, Color.White, chessGame));
+    chessGame.PlaceNewPiece('b', 2, new Pawn(chessGame.Board, Color.White, chessGame));
+    chessGame.PlaceNewPiece('c', 2, new Pawn(chessGame.Board, Color.White, chessGame));
+    chessGame.PlaceNewPiece('d', 2, new Pawn(chessGame.Board, Color.White, chessGame));
+    chessGame.PlaceNewPiece('e', 2, new Pawn(chessGame.Board, Color.White, chessGame));
+    chessGame.PlaceNewPiece('f', 2, new Pawn(chessGame.Board, Color.White, chessGame));
+    chessGame.PlaceNewPiece('g', 2, new Pawn(chessGame.Board, Color.White, chessGame));
+    chessGame.PlaceNewPiece('h', 2, new Pawn(chessGame.Board, Color.White, chessGame));
 
 
     // --- PEÇAS PRETAS ---
@@ -43,14 +43,14 @@ try
     chessGame.PlaceNewPiece('h', 8, new Rook(chessGame.Board, Color.Black));
 
     // Peões (Linha 7)
-    chessGame.PlaceNewPiece('a', 7, new Pawn(chessGame.Board, Color.Black));
-    chessGame.PlaceNewPiece('b', 7, new Pawn(chessGame.Board, Color.Black));
-    chessGame.PlaceNewPiece('c', 7, new Pawn(chessGame.Board, Color.Black));
-    chessGame.PlaceNewPiece('d', 7, new Pawn(chessGame.Board, Color.Black));
-    chessGame.PlaceNewPiece('e', 7, new Pawn(chessGame.Board, Color.Black));
-    chessGame.PlaceNewPiece('f', 7, new Pawn(chessGame.Board, Color.Black));
-    chessGame.PlaceNewPiece('g', 7, new Pawn(chessGame.Board, Color.Black));
-    chessGame.PlaceNewPiece('h', 7, new Pawn(chessGame.Board, Color.Black));
+    chessGame.PlaceNewPiece('a', 7, new Pawn(chessGame.Board, Color.Black, chessGame));
+    chessGame.PlaceNewPiece('b', 7, new Pawn(chessGame.Board, Color.Black, chessGame));
+    chessGame.PlaceNewPiece('c', 7, new Pawn(chessGame.Board, Color.Black, chessGame));
+    chessGame.PlaceNewPiece('d', 7, new Pawn(chessGame.Board, Color.Black, chessGame));
+    chessGame.PlaceNewPiece('e', 7, new Pawn(chessGame.Board, Color.Black, chessGame));
+    chessGame.PlaceNewPiece('f', 7, new Pawn(chessGame.Board, Color.Black, chessGame));
+    chessGame.PlaceNewPiece('g', 7, new Pawn(chessGame.Board, Color.Black, chessGame));
+    chessGame.PlaceNewPiece('h', 7, new Pawn(chessGame.Board, Color.Black, chessGame));
 
     while (!chessGame.IsFinished)
     {

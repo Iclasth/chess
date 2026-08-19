@@ -91,7 +91,7 @@ public class King : Piece
         }
 
         // Special Move: Castle king-side
-        if (MoveCount == 0 && !ChessGame.IsInCheck(Color))
+        if (MoveCount == 0 && !ChessGame.Check)
         {
             Position rookPosition = new Position(Position.Rank, Position.Column + 3);
             if (CanCastle(rookPosition))
@@ -106,7 +106,7 @@ public class King : Piece
         }
 
         // Special Move: Castle queen-side
-        if (MoveCount == 0 && !ChessGame.IsInCheck(Color))
+        if (MoveCount == 0 && !ChessGame.Check)
         {
             Position rookPosition = new Position(Position.Rank, Position.Column - 4);
             if (CanCastle(rookPosition))
