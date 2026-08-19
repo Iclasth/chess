@@ -15,6 +15,8 @@ public class ChessGame
 
     public bool Check { get; set; } = false;
 
+    public Piece? EnPassantVulnerable { get; private set; }
+
     public ChessGame()
     {
         Board = new ChessBoard(8,8);
@@ -23,6 +25,7 @@ public class ChessGame
         IsFinished = false;
         Pieces = new HashSet<Piece>();
         CapturedPieces = new HashSet<Piece>();
+        EnPassantVulnerable = null;
     }
 
     public void PlaceNewPiece(char column, int rank, Piece piece)
@@ -47,6 +50,46 @@ public class ChessGame
         {
             CapturedPieces.Add(capturedPiece);
         }
+
+        // Special move: Castling kingside
+        if (piece is King && destiny.Column == origin.Column + 2)
+        {
+            Position originRook = new Position(origin.Rank, origin.Column + 3);
+            Position destinyRook = new Position(origin.Rank, origin.Column + 1);
+            Piece rook = Board.RemovePiece(originRook);
+            rook.IncrementMoveCount();
+            Board.PlacePiece(rook, destinyRook);    
+        }
+
+        // Special move: Castling queenside
+        if (piece is King && destiny.Column == origin.Column - 2)
+        {
+            Position originRook = new Position(origin.Rank, origin.Column - 4);
+            Position destinyRook = new Position(origin.Rank, origin.Column - 1);
+            Piece rook = Board.RemovePiece(originRook);
+            rook.IncrementMoveCount();
+            Board.PlacePiece(rook, destinyRook);    
+        }
+
+        // Special move: En passant
+        if (piece is Pawn)
+        {
+            if (origin.Column != destiny.Column && capturedPiece == null)
+            {
+                Position pawnPosition;
+                if (piece.Color == Color.White)
+                {
+                    pawnPosition = new Position(destiny.Rank + 1, destiny.Column);
+                }
+                else
+                {
+                    pawnPosition = new Position(destiny.Rank - 1, destiny.Column);
+                }
+                capturedPiece = Board.RemovePiece(pawnPosition);
+                CapturedPieces.Add(capturedPiece);
+            }
+        }
+
         return capturedPiece;
     }
 
@@ -60,6 +103,45 @@ public class ChessGame
             CapturedPieces.Remove(capturedPiece);
         }
         Board.PlacePiece(piece, origin);
+
+        // Special move: Castling kingside
+        if (piece is King && destiny.Column == origin.Column + 2)
+        {
+            Position originRook = new Position(origin.Rank, origin.Column + 3);
+            Position destinyRook = new Position(origin.Rank, origin.Column + 1);
+            Piece rook = Board.RemovePiece(destinyRook);
+            rook.DecrementMoveCount();
+            Board.PlacePiece(rook, originRook);    
+        }
+
+        // Special move: Castling queenside
+        if (piece is King && destiny.Column == origin.Column - 2)
+        {
+            Position originRook = new Position(origin.Rank, origin.Column - 4);
+            Position destinyRook = new Position(origin.Rank, origin.Column - 1);
+            Piece rook = Board.RemovePiece(destinyRook);
+            rook.DecrementMoveCount();
+            Board.PlacePiece(rook, originRook);
+        }
+
+        // Special move: En passant
+        if (piece is Pawn)
+        {
+            if (origin.Column != destiny.Column && capturedPiece == EnPassantVulnerable)
+            {
+                Piece pawn = Board.RemovePiece(destiny);
+                Position pawnPosition;
+                if (piece.Color == Color.White)
+                {
+                    pawnPosition = new Position(3, destiny.Column);
+                }
+                else
+                {
+                    pawnPosition = new Position(4, destiny.Column);
+                }
+                Board.PlacePiece(pawn, pawnPosition);
+            }
+        }
     }
 
     public void RealizePlay(Position origin, Position destiny)
@@ -71,6 +153,19 @@ public class ChessGame
             UndoMove(origin, destiny, capturedPiece);
             throw new ChessBoardException("You cannot put yourself in check!");
         }
+
+        Piece movedPiece = Board.Piece(destiny);
+
+        // Special move: Promotion
+        if (movedPiece is Pawn && (destiny.Rank == 0 || destiny.Rank == 7))
+        {
+            movedPiece = Board.RemovePiece(destiny);
+            Pieces.Remove(movedPiece);
+            Piece queen = new Queen(Board, movedPiece.Color);
+            Board.PlacePiece(queen, destiny);
+            Pieces.Add(queen);
+        }
+
         if (IsInCheck(Adversary(CurrentPlayer)))
         {
             Check = true;
@@ -90,6 +185,17 @@ public class ChessGame
             ChangePlayer();
         }
 
+        
+
+        if (movedPiece is Pawn && (destiny.Rank == origin.Rank - 2  || destiny.Rank == origin.Rank + 2))
+        {
+            EnPassantVulnerable = movedPiece;
+        }
+        else
+        {
+            EnPassantVulnerable = null;
+        }
+        
         
     }
 
@@ -225,7 +331,7 @@ public class ChessGame
 
     public void ValidateDestinyPosition(Position origin, Position destiny)
     {
-        Bpard.ValidatePosition(origin);
+        Board.ValidatePosition(origin);
         Board.ValidatePosition(destiny);
         if (!Board.Piece(origin).CanMoveTo(destiny))
         {
